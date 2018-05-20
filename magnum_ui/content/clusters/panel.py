@@ -12,6 +12,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 import horizon
 
@@ -24,3 +25,6 @@ from magnum_ui.api.rest import magnum  # noqa: F401
 class Clusters(horizon.Panel):
     name = _("Clusters")
     slug = "clusters"
+
+    def allowed(self, context):
+        return getattr(settings, "ENABLE_MAGNUM_TAB", False) is True

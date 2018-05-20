@@ -12,6 +12,7 @@
 #    License for the specific language governing permissions and limitations
 #    under the License.
 
+from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 import horizon
 
@@ -19,3 +20,6 @@ import horizon
 class ClusterTemplates(horizon.Panel):
     name = _("Cluster Templates")
     slug = "cluster_templates"
+
+    def allowed(self, context):
+        return getattr(settings, "ENABLE_MAGNUM_TAB", False) is True
