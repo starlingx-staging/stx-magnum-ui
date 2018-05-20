@@ -1,5 +1,4 @@
 [gerrit]
 host=review.openstack.org
 port=29418
-project=openstack/magnum-ui.git
-defaultbranch=stable/pike
+project=openstack/stx-magnum-ui.git
