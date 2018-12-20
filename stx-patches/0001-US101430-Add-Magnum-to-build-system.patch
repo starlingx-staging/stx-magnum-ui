@@ -1,0 +1,52 @@
+From 2c35ffbf118064ac1b6bca0a753e0992cf6be2aa Mon Sep 17 00:00:00 2001
+From: Jerry Sun <jerry.sun@windriver.com>
+Date: Thu, 10 Aug 2017 10:57:34 -0400
+Subject: [PATCH 1/2] Add Magnum to build system
+
+Added a flag to horizon to control the presence of the magnum horizon tab
+---
+ magnum_ui/content/cluster_templates/panel.py | 4 ++++
+ magnum_ui/content/clusters/panel.py          | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/magnum_ui/content/cluster_templates/panel.py b/magnum_ui/content/cluster_templates/panel.py
+index 98580d9..bca4590 100644
+--- a/magnum_ui/content/cluster_templates/panel.py
++++ b/magnum_ui/content/cluster_templates/panel.py
+@@ -12,6 +12,7 @@
+ #    License for the specific language governing permissions and limitations
+ #    under the License.
+ 
++from django.conf import settings
+ from django.utils.translation import ugettext_lazy as _
+ import horizon
+ 
+@@ -19,3 +20,6 @@ import horizon
+ class ClusterTemplates(horizon.Panel):
+     name = _("Cluster Templates")
+     slug = "cluster_templates"
++
++    def allowed(self, context):
++        return getattr(settings, "ENABLE_MAGNUM_TAB", False) is True
+diff --git a/magnum_ui/content/clusters/panel.py b/magnum_ui/content/clusters/panel.py
+index 7bf42ac..8f020c1 100644
+--- a/magnum_ui/content/clusters/panel.py
++++ b/magnum_ui/content/clusters/panel.py
+@@ -12,6 +12,7 @@
+ #    License for the specific language governing permissions and limitations
+ #    under the License.
+ 
++from django.conf import settings
+ from django.utils.translation import ugettext_lazy as _
+ import horizon
+ 
+@@ -24,3 +25,6 @@ from magnum_ui.api.rest import magnum  # noqa: F401
+ class Clusters(horizon.Panel):
+     name = _("Clusters")
+     slug = "clusters"
++
++    def allowed(self, context):
++        return getattr(settings, "ENABLE_MAGNUM_TAB", False) is True
+-- 
+2.7.4
+
